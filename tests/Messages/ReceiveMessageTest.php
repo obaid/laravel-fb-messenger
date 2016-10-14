@@ -20,12 +20,15 @@ class ReceiveMessageTest extends TestCase
 
     private $recipient;
 
+    private $attachments;
+
     public function setUp()
     {
         $this->message = str_random();
         $this->recipient = str_random();
         $this->sender = str_random();
         $this->postback = str_random();
+        $this->attachments = [];
         $this->skip = true;
         $this->payload = false;
     }
@@ -66,8 +69,27 @@ class ReceiveMessageTest extends TestCase
         $this->assertEquals($this->recipient, $actual->getRecipient());
     }
 
+    public function test_get_attachments()
+    {
+        $actual = $this->getReceiveMessage();
+        $this->assertEquals($this->attachments, $actual->getAttachments());
+    }
+
+    public function test_has_attachments()
+    {
+        $actual = $this->getReceiveMessage();
+        $this->assertFalse($actual->hasAttachments());
+    }
+
     private function getReceiveMessage()
     {
-        return new ReceiveMessage($this->message, $this->postback, $this->recipient, $this->sender, $this->skip, $this->payload);
+        $message = new ReceiveMessage($this->recipient, $this->sender);
+        $message
+            ->setMessage($this->message)
+            ->setPostback($this->postback)
+            ->setSkip($this->skip)
+            ->setPayload($this->payload)
+            ->setAttachments($this->attachments);
+        return $message;
     }
 }

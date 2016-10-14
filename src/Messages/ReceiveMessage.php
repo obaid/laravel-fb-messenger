@@ -4,78 +4,65 @@
  * Date: 2016/8/31
  * Time: 上午1:08
  */
-
 namespace Casperlaitw\LaravelFbMessenger\Messages;
-
-/**
- * Class ReceiveMessage
- * @package Casperlaitw\LaravelFbMessenger\Messages
- */
 /**
  * Class ReceiveMessage
  * @package Casperlaitw\LaravelFbMessenger\Messages
  */
 class ReceiveMessage
 {
-
     /**
      * @var string
      */
     private $sender;
-
     /**
      * @var string
      */
     private $message;
-
     /**
      * @var bool
      */
-    private $skip;
-
+    private $skip = false;
     /**
      * @var bool
      */
-    private $payload;
-
+    private $payload = false;
     /**
      * @var string
      */
     private $postback;
-
     /**
      * @var string
      */
     private $recipient;
-
     /**
      * @var array
      */
-    private $attachments;
-
+    private $attachments = [];
     /**
      * Receive constructor.
      *
-     * @param string $message
-     * @param string $postback
      * @param string $recipient
      * @param string $sender
-     * @param bool $skip
-     * @param bool $payload
      *
-     * @internal param bool $isDelivery
      */
-    public function __construct($message, $postback, $recipient, $sender, $skip = false, $payload = false, $attachments = false)
+    public function __construct($recipient, $sender)
     {
-        $this->message = $message;
-        $this->postback = $postback;
         $this->recipient = $recipient;
         $this->sender = $sender;
-        $this->skip = $skip;
-        $this->payload = $payload;
-        $this->attachments = $attachments;
     }
-
+    /**
+     * Set skip
+     *
+     * @param $skip
+     *
+     * @return $this
+     */
+    public function setSkip($skip)
+    {
+        $this->skip = $skip;
+        return $this;
+    }
     /**
      * Is skip the message
      *
@@ -85,7 +72,6 @@ class ReceiveMessage
     {
         return $this->skip;
     }
-
     /**
      * Get sender
      *
@@ -95,7 +81,15 @@ class ReceiveMessage
     {
         return $this->sender;
     }
-
+    /**
+     * @param $message
+     * @return $this
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+        return $this;
+    }
     /**
      * Get message
      *
@@ -105,14 +99,38 @@ class ReceiveMessage
     {
         return $this->message;
     }
-
+    /**
+     * Set postback
+     *
+     * @param $postback
+     *
+     * @return $this
+     */
+    public function setPostback($postback)
+    {
+        $this->postback = $postback;
+        return $this;
+    }
     /**
      * Get postback payload
+     *
      * @return string
      */
     public function getPostback()
     {
         return $this->postback;
+    }
+    /**
+     * Set payload
+     *
+     * @param $payload
+     *
+     * @return $this
+     */
+    public function setPayload($payload)
+    {
+        $this->payload = $payload;
+        return $this;
     }
     /**
      * Is playload message
@@ -123,22 +141,43 @@ class ReceiveMessage
     {
         return $this->payload;
     }
-
     /**
      * Get recipient id
+     *
      * @return string
      */
     public function getRecipient()
     {
         return $this->recipient;
     }
-
     /**
-     * Get attachements
+     * Set attachments
+     *
+     * @param $attachments
+     *
+     * @return $this
+     */
+    public function setAttachments($attachments)
+    {
+        $this->attachments = $attachments;
+        return $this;
+    }
+    /**
+     * Get attachments
+     *
      * @return array
      */
-    public function getAttachments() 
+    public function getAttachments()
     {
         return $this->attachments;
+    }
+    /**
+     * Has attachments
+     *
+     * @return bool
+     */
+    public function hasAttachments()
+    {
+        return count($this->attachments) > 0;
     }
 }
