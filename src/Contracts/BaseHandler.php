@@ -38,6 +38,17 @@ abstract class BaseHandler implements HandlerInterface
     }
 
     /**
+     * Set token for the bot instance
+     * 
+     * @param $token
+     * 
+     * @return null
+     */
+    public function setToken($token) {
+        $this->bot->setToken($token);
+    }
+
+    /**
      * Send message to api
      *
      * @param Message $message

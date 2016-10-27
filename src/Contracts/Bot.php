@@ -128,4 +128,15 @@ class Bot
     {
         return new HandleMessageResponse($this->call('me/thread_settings', $message, $type));
     }
+
+    /**
+     * Set a new token for this bot instance
+     * 
+     * @param string $token
+     *
+     * @return null
+     */
+    protected function setToken($token) {
+        $this->token = $token;
+    }
 }
