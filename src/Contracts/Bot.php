@@ -136,7 +136,7 @@ class Bot
      *
      * @return null
      */
-    protected function setToken($token) {
+    public function setToken($token) {
         $this->token = $token;
     }
 }
