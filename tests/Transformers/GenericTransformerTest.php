@@ -1,11 +1,10 @@
 <?php
 
 use Casperlaitw\LaravelFbMessenger\Collections\ElementCollection;
-use Casperlaitw\LaravelFbMessenger\Contracts\Messages\Message;
+use Casperlaitw\LaravelFbMessenger\Contracts\Messages\Template;
 use Casperlaitw\LaravelFbMessenger\Messages\Element;
 use Casperlaitw\LaravelFbMessenger\Transformers\GenericTransformer;
 use Mockery as m;
-use pimax\Messages\StructuredMessage;
 
 /**
  * User: casperlai
@@ -32,6 +31,7 @@ class GenericTransformerTest extends TestCase
 
         $expected = [
             'template_type' => 'generic',
+            'image_aspect_ratio' => 'horizontal',
             'elements' => $expectedCase,
         ];
 
@@ -44,9 +44,10 @@ class GenericTransformerTest extends TestCase
     {
         $elements = new ElementCollection($testCase);
 
-        $message = m::mock(Message::class)
+        $message = m::mock(Template::class)
             ->shouldReceive('getSender')->andReturn($testSender)
             ->shouldReceive('getCollections')->andReturn($elements)
+            ->shouldReceive('getImageRatio')->andReturn('horizontal')
             ->getMock();
 
         return $message;

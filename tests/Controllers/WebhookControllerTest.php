@@ -2,7 +2,9 @@
 
 use Casperlaitw\LaravelFbMessenger\Contracts\DefaultHandler;
 use Casperlaitw\LaravelFbMessenger\Controllers\WebhookController;
+use Casperlaitw\LaravelFbMessenger\Contracts\Debug\Debug;
 use Illuminate\Contracts\Config\Repository;
+use Illuminate\Events\Dispatcher;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Mockery as m;
@@ -36,7 +38,9 @@ class WebhookControllerTest extends TestCase
             ->andReturn($verifyToken)
             ->getMock();
 
-        $controller = new WebhookController($config);
+        $debug = m::mock(Debug::class);
+
+        $controller = new WebhookController($config, $debug);
         $response = $controller->index($request);
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals($challenge, $response->getContent());
@@ -53,8 +57,9 @@ class WebhookControllerTest extends TestCase
             ->shouldReceive('get')
             ->andReturn(str_random())
             ->getMock();
+        $debug = m::mock(Debug::class);
 
-        $controller = new WebhookController($config);
+        $controller = new WebhookController($config, $debug);
         $controller->index($request);
     }
 
@@ -68,10 +73,15 @@ class WebhookControllerTest extends TestCase
             ->shouldReceive('get')
             ->with('fb-messenger.app_token')
             ->shouldReceive('get')
+            ->with('fb-messenger.app_secret')
+            ->shouldReceive('get')
             ->with('fb-messenger.postbacks')
             ->andReturn([])
             ->shouldReceive('get')
             ->with('fb-messenger.auto_typing')
+            ->andReturn(false)
+            ->shouldReceive('get')
+            ->with('fb-messenger.debug')
             ->andReturn(false);
 
         $request = m::mock(Request::class)
@@ -80,7 +90,9 @@ class WebhookControllerTest extends TestCase
             ->andReturn([])
             ->getMock();
 
-        $controller = new WebhookController($config);
+        $debug = m::mock(Debug::class);
+
+        $controller = new WebhookController($config, $debug);
         $controller->receive($request);
     }
 
@@ -94,10 +106,15 @@ class WebhookControllerTest extends TestCase
             ->shouldReceive('get')
             ->with('fb-messenger.app_token')
             ->shouldReceive('get')
+            ->with('fb-messenger.app_secret')
+            ->shouldReceive('get')
             ->with('fb-messenger.postbacks')
             ->andReturn([])
             ->shouldReceive('get')
             ->with('fb-messenger.auto_typing')
+            ->andReturn(false)
+            ->shouldReceive('get')
+            ->with('fb-messenger.debug')
             ->andReturn(false);
 
         $request = m::mock(Request::class)
@@ -106,7 +123,9 @@ class WebhookControllerTest extends TestCase
             ->andReturnNull()
             ->getMock();
 
-        $controller = new WebhookController($config);
+        $debug = m::mock(Debug::class);
+
+        $controller = new WebhookController($config, $debug);
         $controller->receive($request);
     }
 }

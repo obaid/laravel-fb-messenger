@@ -1,8 +1,9 @@
 <?php
 /**
+ * Created by PhpStorm.
  * User: casperlai
- * Date: 2016/9/16
- * Time: 上午2:59
+ * Date: 2016/11/9
+ * Time: 上午8:49
  */
 
 namespace Casperlaitw\LaravelFbMessenger\Exceptions;
@@ -10,9 +11,9 @@ namespace Casperlaitw\LaravelFbMessenger\Exceptions;
 use Exception;
 
 /**
- * Class OnlyUseByItselfException
+ * Class DefaultActionInvalidTypeException
  * @package Casperlaitw\LaravelFbMessenger\Exceptions
  */
-class OnlyUseByItselfException extends Exception
+class DefaultActionInvalidTypeException extends Exception
 {
 }

@@ -62,7 +62,8 @@ class Receiver
             } else {
                 $receiveMessage
                     ->setMessage(Arr::get($message, 'message.text'))
-                    ->setSkip(Arr::has($message, 'delivery') ||
+                    ->setSkip(
+                        Arr::has($message, 'delivery') ||
                         Arr::has($message, 'message.is_echo') ||
                         (!Arr::has($message, 'message.text') && !Arr::has($message, 'message.attachments'))
                     )

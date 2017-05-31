@@ -8,15 +8,16 @@
 namespace Casperlaitw\LaravelFbMessenger\Messages;
 
 use Casperlaitw\LaravelFbMessenger\Contracts\Messages\Message;
-use Casperlaitw\LaravelFbMessenger\Contracts\Messages\ThreadInterface;
+use Casperlaitw\LaravelFbMessenger\Contracts\Messages\ProfileInterface;
+use Casperlaitw\LaravelFbMessenger\Contracts\RequestType;
 
 /**
  * Class StartButton
  * @package Casperlaitw\LaravelFbMessenger\Messages
  */
-class StartButton extends Message implements ThreadInterface
+class StartButton extends Message implements ProfileInterface
 {
-    use Deletable;
+    use RequestType;
 
     /**
      * @var string
@@ -42,12 +43,8 @@ class StartButton extends Message implements ThreadInterface
     public function toData()
     {
         return [
-            'setting_type' => 'call_to_actions',
-            'thread_state' => 'new_thread',
-            'call_to_actions' => [
-                [
-                    'payload' => $this->payload,
-                ],
+            'get_started' => [
+                'payload' => $this->payload,
             ],
         ];
     }

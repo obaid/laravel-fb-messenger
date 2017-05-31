@@ -1,6 +1,6 @@
 {
   "name": "laravel-fb-messenger",
-  "version": "1.1.4",
+  "version": "1.4.5",
   "description": "[![Build Status](https://travis-ci.org/CasperLaiTW/laravel-fb-messenger.svg?branch=master)](https://travis-ci.org/CasperLaiTW/laravel-fb-messenger) [![Coverage Status](https://coveralls.io/repos/github/CasperLaiTW/laravel-fb-messenger/badge.svg?branch=master)](https://coveralls.io/github/CasperLaiTW/laravel-fb-messenger?branch=master) [![StyleCI](https://styleci.io/repos/66968888/shield)](https://styleci.io/repos/66968888) [![Latest Stable Version](https://poser.pugx.org/casperlaitw/laravel-fb-messenger/v/stable)](https://packagist.org/packages/casperlaitw/laravel-fb-messenger) [![Latest Unstable Version](https://poser.pugx.org/casperlaitw/laravel-fb-messenger/v/unstable)](https://packagist.org/packages/casperlaitw/laravel-fb-messenger) [![Total Downloads](https://poser.pugx.org/casperlaitw/laravel-fb-messenger/downloads)](https://packagist.org/packages/casperlaitw/laravel-fb-messenger) [![Monthly Downloads](https://poser.pugx.org/casperlaitw/laravel-fb-messenger/d/monthly)](https://packagist.org/packages/casperlaitw/laravel-fb-messenger)",
   "main": "index.js",
   "directories": {
@@ -8,10 +8,17 @@
     "test": "tests"
   },
   "devDependencies": {
-    "cz-conventional-changelog": "^1.2.0",
-    "standard-version": "^3.0.0"
+    "babel-cli": "^6.18.0",
+    "babel-loader": "^6.2.8",
+    "babel-preset-es2015": "^6.18.0",
+    "cz-conventional-changelog": "^2.0.0",
+    "standard-version": "^4.0.0",
+    "vue-loader": "^9.9.5",
+    "webpack": "^1.13.3"
   },
   "scripts": {
+    "dev": "webpack --config webpack/webpack.config.js --watch",
+    "prod": "webpack --config webpack/webpack.config.js -p",
     "release": "./node_modules/.bin/standard-version"
   },
   "repository": {
@@ -28,5 +35,14 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "bootstrap-vue": "^0.3.7",
+    "highlight.js": "^9.8.0",
+    "json-stringify": "^1.0.0",
+    "laravel-echo": "^1.1.3",
+    "lodash": "^4.17.2",
+    "pusher-js": "^3.2.2",
+    "vue": "^2.0.7"
   }
 }

@@ -8,6 +8,7 @@
 namespace Casperlaitw\LaravelFbMessenger\Contracts\Messages;
 
 use Casperlaitw\LaravelFbMessenger\Collections\BaseCollection;
+use Casperlaitw\LaravelFbMessenger\Messages\Quickable;
 use Illuminate\Container\Container;
 
 /**
@@ -16,10 +17,19 @@ use Illuminate\Container\Container;
  */
 abstract class Template extends Attachment
 {
+    use Quickable;
+
     /**
      * @var BaseCollection
      */
     protected $collections;
+
+    /**
+     * User can use native share
+     *
+     * @var bool
+     */
+    private $share = true;
 
     /**
      * Structured constructor.
@@ -31,6 +41,7 @@ abstract class Template extends Attachment
         parent::__construct($sender, self::TYPE_TEMPLATE);
         $app = new Container();
         $this->collections = $app->make($this->collection());
+        $this->bootQuick();
     }
 
 
@@ -74,6 +85,33 @@ abstract class Template extends Attachment
     public function getCollections()
     {
         return $this->collections;
+    }
+
+    /**
+     * To array for send api
+     *
+     * @return array
+     */
+    public function toData()
+    {
+        if (!$this->share) {
+            $this->setPayload(array_merge($this->getPayload(), [
+                'sharable' => false,
+            ]));
+        }
+        return $this->makeQuickReply(parent::toData());
+    }
+
+    /**
+     * Disable share
+     *
+     * @return $this
+     */
+    public function disableShare()
+    {
+        $this->share = false;
+
+        return $this;
     }
 
     /**

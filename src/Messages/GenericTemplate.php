@@ -17,7 +17,19 @@ use Casperlaitw\LaravelFbMessenger\Transformers\GenericTransformer;
  */
 class GenericTemplate extends Template
 {
-    use Quickable;
+    /**
+     * Horizontal image
+     */
+    const IMAGE_HORIZONTAL = 'horizontal';
+    /**
+     * Square image
+     */
+    const IMAGE_SQUARE = 'square';
+
+    /**
+     * @var string
+     */
+    private $imageRatio = self::IMAGE_HORIZONTAL;
 
     /**
      * Generic constructor.
@@ -29,7 +41,6 @@ class GenericTemplate extends Template
     {
         parent::__construct($sender);
         $this->add($elements);
-        $this->bootQuick();
     }
 
     /**
@@ -42,7 +53,29 @@ class GenericTemplate extends Template
         $payload = (new GenericTransformer)->transform($this);
         $this->setPayload($payload);
 
-        return $this->makeQuickReply(parent::toData());
+        return parent::toData();
+    }
+
+    /**
+     * Set image aspect ratio
+     *
+     * @param $value
+     * @return $this
+     */
+    public function setImageRatio($value)
+    {
+        $this->imageRatio = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get image ratio
+     * @return string
+     */
+    public function getImageRatio()
+    {
+        return $this->imageRatio;
     }
 
     /**

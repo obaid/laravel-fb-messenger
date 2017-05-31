@@ -25,4 +25,38 @@ class ButtonTest extends TestCase
         $button = new Button('unknown', '');
         $button->toData();
     }
+
+    public function test_set_extra()
+    {
+        $button = new Button(Button::TYPE_WEB, 'title', 'url');
+        $button->setExtra(['extra' => 'test']);
+
+        $expected = [
+            'type' => 'web_url',
+            'title' => 'title',
+            'url' => 'url',
+            'extra' => 'test',
+        ];
+
+        $this->assertEquals($expected, $button->toData());
+    }
+
+    public function test_get_type()
+    {
+        $button = new Button(Button::TYPE_POSTBACK, 'title', 'payload');
+
+        $this->assertEquals('postback', $button->getType());
+    }
+
+    public function test_account_type_button()
+    {
+        $url = 'https://www.example.com/authorize';
+        $button = new Button(Button::TYPE_ACCOUNT_LINK, null, $url);
+        $expected = [
+            'type' => 'account_link',
+            'url' => $url,
+        ];
+
+        $this->assertEquals($expected, $button->toData());
+    }
 }
